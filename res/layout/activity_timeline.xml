@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimelineActivity" >
+
+    <RelativeLayout
+        android:id="@+id/relativeBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#1ab2e8" >
+
+        <ImageView
+            android:id="@+id/imagePardal"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/pardal" />
+
+        <TextView
+            android:id="@+id/textScreenName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/imagePardal"
+            android:text="Screen Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/imageButtonCompose"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="#1ab2e8"
+            android:scaleType="centerInside"
+            android:src="@drawable/button_compose" />
+
+        <ImageButton
+            android:id="@+id/imageButtonSearch"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/imageButtonCompose"
+            android:background="#1ab2e8"
+            android:scaleType="centerInside"
+            android:src="@drawable/button_search" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearButtons"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/relativeBar"
+        android:background="#000000"
+        android:gravity="center" >
+
+        <ImageButton
+            android:id="@+id/imageButtonHome"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/button_home_default" />
+
+        <ImageButton
+            android:id="@+id/imageButtonTrending"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/button_trending_default" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listTimeline"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearButtons" >
+
+    </ListView>
+
+</RelativeLayout>

@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menuRefresh"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:title="Refresh"/>
+    <item
+        android:id="@+id/menuSignOut"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="Sign Out"/>
+
+</menu>
