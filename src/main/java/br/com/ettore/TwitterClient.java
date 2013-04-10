@@ -1,5 +1,6 @@
 package br.com.ettore;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -10,10 +11,15 @@ import org.json.simple.parser.JSONParser;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 
 public class TwitterClient extends Application {
+	
+	public static final String TAG = "TwitterClient";
 
 	public static final String USER_TOKEN = "user_token";
 	public static final String USER_SECRET = "user_secret";
@@ -36,7 +42,7 @@ public class TwitterClient extends Application {
 		
 		saveRequestInformation(settings, twitter.getConsumerToken(), twitter.getConsumerTokenSecret());
 		
-		Log.d("TwitterClient", "onCreate");
+		Log.d(TAG, "onCreate");
 	}
 
 	private void saveRequestInformation(SharedPreferences settings,
@@ -68,17 +74,34 @@ public class TwitterClient extends Application {
 		}
 		editor.commit();
 	}
+	
+	public boolean isNetworkConnected() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+		if (ni == null)
+			return false;
+		return true;
+	}
 
-	public void signIn(String otoken, String verifier) {
+	public boolean signIn(String otoken, String verifier) {
 		String token = settings.getString(REQUEST_TOKEN, null);
-		String secret = settings.getString(REQUEST_SECRET, null);		
-		twitter.signIn(token, secret, otoken, verifier);
+		String secret = settings.getString(REQUEST_SECRET, null);	
+		
+		Log.d(TAG, "token: " + token);
+		Log.d(TAG, "secret: " + secret);
+		Log.d(TAG, "otoken: " + otoken);
+		Log.d(TAG, "verifier: " + verifier);
+		
+		if (!twitter.signIn(token, secret, otoken, verifier))
+			return false;
 		
 		saveAuthInformation(settings, twitter.getConsumerToken(), twitter.getConsumerTokenSecret());
 		saveRequestInformation(settings, null, null);
 		
 		editor.putString("screenName", this.getScreenName());		
 		editor.commit();
+		
+		return true;
 	}
 	
 	public void signOut() {
@@ -107,7 +130,7 @@ public class TwitterClient extends Application {
 			JSONObject obj = (JSONObject) parser.parse(accountSettings);
 			return obj.get("screen_name").toString();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		
 		return null;
@@ -142,7 +165,7 @@ public class TwitterClient extends Application {
 			}
 			return tweets;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}
@@ -176,7 +199,7 @@ public class TwitterClient extends Application {
 			}
 			return tweets;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}
@@ -212,7 +235,7 @@ public class TwitterClient extends Application {
 			}
 			return tweets;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}

@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimelineActivity" >
+
+    <RelativeLayout
+        android:id="@+id/relativeBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#1ab2e8" >
+
+        <ImageView
+            android:id="@+id/imagePardal"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/pardal" />
+
+        <TextView
+            android:id="@+id/textScreenName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/imagePardal"
+            android:text="Screen Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/editTweet"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/relativeBotton"
+        android:layout_below="@+id/relativeBar"
+        android:ems="10"
+        android:gravity="center_vertical|top"
+        android:inputType="textMultiLine" />
+
+    <RelativeLayout
+        android:id="@+id/relativeBotton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#DDDDDD" >
+
+        <Button
+            android:id="@+id/buttonTweet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_custom"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Tweet"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/textLimit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="140"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
+
+</RelativeLayout>

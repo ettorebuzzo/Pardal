@@ -1,66 +1,59 @@
 package br.com.ettore;
 
-import java.net.URL;
-import java.util.List;
+import java.util.ArrayList;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class TimelineAdapter extends BaseAdapter {
+public class TimelineAdapter extends ArrayAdapter<Tweet> {
+	private final Activity context;
+	private final ArrayList<Tweet> tweets;
+	private final ImageDownloader imageDownloader = new ImageDownloader();
 
-	private List<Tweet> tweets;
-	private LayoutInflater mInflater;
+	static class ViewHolder {
+		public TextView textText, textUserName;
+		public ImageView imageProfile;
+	}
 
-	public TimelineAdapter(Context context, List<Tweet> tweets) {
-		mInflater = LayoutInflater.from(context);
+	public TimelineAdapter(Activity context, ArrayList<Tweet> tweets) {
+		super(context, R.layout.line_tweet, tweets);
+		this.context = context;
 		this.tweets = tweets;
 	}
 
 	@Override
-	public int getCount() {
-		return tweets.size();
-	}
-
-	@Override
-	public Object getItem(int position) {
-		return tweets.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return tweets.get(position).getId();
-	}
-
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View v = mInflater.inflate(R.layout.line_tweet, null);
+		View rowView = convertView;
 
-		TextView textUserName = (TextView) v.findViewById(R.id.textUserName);
-		TextView textScreenName = (TextView) v.findViewById(R.id.textScreenName);
-		TextView textText = (TextView) v.findViewById(R.id.textText);
-		ImageView imageProfile = (ImageView) v.findViewById(R.id.imageProfile);
+		if (rowView == null) {
+			LayoutInflater inflater = context.getLayoutInflater();
+			rowView = inflater.inflate(R.layout.line_tweet, null);
 
-		Tweet t = tweets.get(position);
-		textUserName.setText(t.getUserName());
-		textScreenName.setText("@" + t.getUserScreenName());
-		textText.setText(t.getText());
-
-		try {
-			URL url = new URL(t.getProfileImageUrl());
-			Bitmap bmp = BitmapFactory.decodeStream(url.openConnection()
-					.getInputStream());
-			imageProfile.setImageBitmap(bmp);
-		} catch (Exception e) {
-			e.printStackTrace();
+			ViewHolder viewHolder = new ViewHolder();
+			viewHolder.textText = (TextView) rowView
+					.findViewById(R.id.textText);
+			viewHolder.textUserName = (TextView) rowView
+					.findViewById(R.id.textUserName);
+			viewHolder.imageProfile = (ImageView) rowView
+					.findViewById(R.id.imageProfile);
+			rowView.setTag(viewHolder);
 		}
 
-		return v;
+		ViewHolder holder = (ViewHolder) rowView.getTag();
+
+		Tweet t = tweets.get(position);
+		holder.textText.setText(t.getText());
+		holder.textUserName.setText(t.getUserName());
+		//if (t.getProfileImage() != null)
+		//	holder.imageProfile.setImageBitmap(t.getProfileImage());
+		
+		imageDownloader.download(t.getProfileImageUrl(), (ImageView) holder.imageProfile);
+
+		return rowView;
 	}
 }

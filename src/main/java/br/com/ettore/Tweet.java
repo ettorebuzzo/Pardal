@@ -1,5 +1,7 @@
 package br.com.ettore;
 
+import android.graphics.Bitmap;
+
 public class Tweet {
 	private long id;
 	private String createdAt;
@@ -8,6 +10,7 @@ public class Tweet {
 	private String userName;
 	private String userScreenName;
 	private String profileImageUrl;
+	private Bitmap profileImage;
 
 	public long getId() {
 		return id;
@@ -27,6 +30,10 @@ public class Tweet {
 
 	public String getText() {
 		return text;
+	}
+
+	public Bitmap getProfileImage() {
+		return profileImage;
 	}
 
 	public void setText(String text) {
@@ -63,6 +70,10 @@ public class Tweet {
 
 	public void setProfileImageUrl(String profileImageUrl) {
 		this.profileImageUrl = profileImageUrl;
+	}
+
+	public void setProfileImage(Bitmap profileImage) {
+		this.profileImage = profileImage;
 	}
 
 }

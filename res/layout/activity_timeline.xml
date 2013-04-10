@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/imagePardal"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/pardal" />
 
         <TextView
@@ -30,8 +30,8 @@
 
         <ImageButton
             android:id="@+id/imageButtonCompose"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:background="#1ab2e8"
             android:scaleType="centerInside"
@@ -39,8 +39,8 @@
 
         <ImageButton
             android:id="@+id/imageButtonSearch"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/imageButtonCompose"
             android:background="#1ab2e8"
@@ -68,14 +68,14 @@
             android:src="@drawable/button_home_default" />
 
         <ImageButton
-            android:id="@+id/imageButtonTrending"
+            android:id="@+id/imageButtonProfile"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@null"
             android:scaleType="centerInside"
-            android:src="@drawable/button_trending_default" />
+            android:src="@drawable/button_profile_default" />
 
     </LinearLayout>
 
@@ -86,5 +86,12 @@
         android:layout_below="@id/linearButtons" >
 
     </ListView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>

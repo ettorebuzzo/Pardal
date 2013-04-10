@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import junit.framework.Assert;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.basic.DefaultOAuthConsumer;
@@ -15,6 +14,7 @@ import android.net.Uri;
 import android.util.Log;
 
 public class Twitter {
+	private static final String TAG = "Twitter";
 
 	// Application keys
 	private static final String CONSUMER_KEY = "4ZQ9WODvxYUgYISDb8F0A";
@@ -37,7 +37,6 @@ public class Twitter {
 
 	private Uri authUrl;
  
-	//TODO Passar para Singleton
 	public Twitter() {
 		consumer = new DefaultOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
 		provider = new DefaultOAuthProvider(TWITTER_REQUEST_TOKEN_URL,
@@ -48,6 +47,7 @@ public class Twitter {
 		try {
 			authUrl = Uri.parse(provider.retrieveRequestToken(consumer,	CALLBACK_URI.toString()));
 		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -57,16 +57,17 @@ public class Twitter {
 
 	public boolean signIn(String token, String secret, String otoken, String verifier) {
 		try {
-			if (!(token == null || secret == null)) {
+			if (!(token == null || secret == null))
 				consumer.setTokenWithSecret(token, secret);
-			}
 			
-			Assert.assertEquals(otoken, consumer.getToken());
+			if (!otoken.equals(consumer.getToken()))
+				return false;
+			
 			provider.retrieveAccessToken(consumer, verifier);
 			
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 
 		return false;
@@ -94,7 +95,7 @@ public class Twitter {
 		URL url;
 		try {
 			url = new URL(
-					"https://api.twitter.com/1/statuses/home_timeline.xml");
+					"https://api.twitter.com/1.1/account/settings.json");
 			HttpURLConnection request = (HttpURLConnection) url
 					.openConnection();
 			consumer.sign(request);
@@ -103,14 +104,14 @@ public class Twitter {
 			if (request.getResponseCode() == 200)
 				return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return false;
 	}
 	
 	
 	//TODO Alterar nome dessa função
-	private String parser(InputStream stream) {
+	private String outputBuilder(InputStream stream) {
 		try {
 			StringBuilder out = new StringBuilder();
 			BufferedReader br = new BufferedReader(
@@ -121,7 +122,7 @@ public class Twitter {
 			br.close();
 			return out.toString();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}
@@ -136,9 +137,9 @@ public class Twitter {
 			consumer.sign(request);
 			request.connect();
 
-			return parser(request.getInputStream());
+			return outputBuilder(request.getInputStream());
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}
@@ -153,9 +154,9 @@ public class Twitter {
 			consumer.sign(request);
 			request.connect();
 
-			return parser(request.getInputStream());
+			return outputBuilder(request.getInputStream());
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}
@@ -172,7 +173,7 @@ public class Twitter {
 
 		return request.getResponseCode();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return 0;
 	}
@@ -192,7 +193,7 @@ public class Twitter {
 
 			return request.getResponseCode();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return 0;
 	}
@@ -207,9 +208,9 @@ public class Twitter {
 			consumer.sign(request);
 			request.connect();
 
-			return parser(request.getInputStream());
+			return outputBuilder(request.getInputStream());
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}
@@ -224,9 +225,9 @@ public class Twitter {
 			consumer.sign(request);
 			request.connect();
 
-			return parser(request.getInputStream());
+			return outputBuilder(request.getInputStream());
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}
